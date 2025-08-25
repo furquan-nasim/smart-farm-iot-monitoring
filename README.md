@@ -5,7 +5,7 @@ A cloud-based prototype that simulates farm sensors (temperature, moisture, pH),
 ---
 
 ## 🚀 Architecture
-![Architecture Diagram](architecture/smart-farm-architecture-hd.png)
+![Architecture Diagram](architecture/smart-farm-architecture.png)
 
 ---
 
