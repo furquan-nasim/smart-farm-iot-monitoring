@@ -1,0 +1,85 @@
+<?xml version="1.0" ?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="900" viewBox="0 0 1300 900">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+  <text x="650" y="40" font-size="22" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="bold" text-anchor="middle" fill="#111827">Smart Farm IoT Monitoring – Cloud Architecture</text>
+  <rect x="60" y="100" width="260" height="130" fill="#ecfeff" stroke="#0891b2" rx="12" ry="12" stroke-width="2"/>
+  <text x="190" y="130" font-size="16" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="bold" text-anchor="middle" fill="#111827">Sensor / Simulator</text>
+  <text x="190" y="155" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Python (simulator.py)</text>
+  <text x="190" y="175" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Temp, Moisture, pH</text>
+  <text x="190" y="195" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">MQTT over TLS (certs)</text>
+  <rect x="390" y="100" width="250" height="130" fill="#eef2ff" stroke="#6366f1" rx="12" ry="12" stroke-width="2"/>
+  <text x="515" y="130" font-size="16" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="bold" text-anchor="middle" fill="#111827">AWS IoT Core</text>
+  <text x="515" y="155" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">MQTT Broker + Policies</text>
+  <text x="515" y="175" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Thing: sim-01</text>
+  <text x="515" y="195" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Topic: farm/sensors</text>
+  <line x1="320" y1="165" x2="390" y2="165" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="355" y="159" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">MQTT Publish</text>
+  <rect x="390" y="260" width="250" height="110" fill="#f5f3ff" stroke="#7c3aed" rx="12" ry="12" stroke-width="2"/>
+  <text x="515" y="290" font-size="15" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="bold" text-anchor="middle" fill="#111827">IoT Rule: Ingest</text>
+  <text x="515" y="315" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">SELECT * FROM 'farm/sensors'</text>
+  <text x="515" y="335" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">→ DynamoDB (PutItem)</text>
+  <rect x="680" y="240" width="260" height="150" fill="#fef3c7" stroke="#d97706" rx="12" ry="12" stroke-width="2"/>
+  <text x="810" y="270" font-size="16" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="bold" text-anchor="middle" fill="#111827">Amazon DynamoDB</text>
+  <text x="810" y="295" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Table: FarmSensorData</text>
+  <text x="810" y="315" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">PK: deviceId, SK: timestamp</text>
+  <text x="810" y="335" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">payload: {temp, moisture, ph}</text>
+  <line x1="640" y1="315" x2="680" y2="315" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="660" y="309" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">PutItem</text>
+  <rect x="390" y="410" width="250" height="110" fill="#fee2e2" stroke="#ef4444" rx="12" ry="12" stroke-width="2"/>
+  <text x="515" y="440" font-size="15" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="bold" text-anchor="middle" fill="#111827">IoT Rule: Alerts</text>
+  <text x="515" y="465" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">temp&gt;35 OR moisture&lt;30</text>
+  <text x="515" y="485" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">OR ph&lt;6 OR ph&gt;7 → SNS</text>
+  <rect x="680" y="410" width="260" height="110" fill="#fffbeb" stroke="#f59e0b" rx="12" ry="12" stroke-width="2"/>
+  <text x="810" y="440" font-size="16" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="bold" text-anchor="middle" fill="#111827">Amazon SNS</text>
+  <text x="810" y="465" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Topic: FarmSensorAlerts</text>
+  <text x="810" y="485" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Email subscription</text>
+  <line x1="640" y1="465" x2="680" y2="465" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="660" y="459" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Alert JSON</text>
+  <rect x="390" y="560" width="250" height="130" fill="#eff6ff" stroke="#3b82f6" rx="12" ry="12" stroke-width="2"/>
+  <text x="515" y="590" font-size="15" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="bold" text-anchor="middle" fill="#111827">Athena Federated Connector</text>
+  <text x="515" y="615" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Lambda + Spill S3</text>
+  <text x="515" y="635" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Catalog: Athena-t6cmkkzw</text>
+  <rect x="680" y="560" width="260" height="130" fill="#faf5ff" stroke="#8b5cf6" rx="12" ry="12" stroke-width="2"/>
+  <text x="810" y="590" font-size="16" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="bold" text-anchor="middle" fill="#111827">AWS Glue Catalog</text>
+  <text x="810" y="615" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Database: iot_farm_db</text>
+  <text x="810" y="635" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">View: iot_farm_view</text>
+  <line x1="810" y1="390" x2="810" y2="560" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="810" y="469" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Query via Lambda</text>
+  <line x1="810" y1="390" x2="810" y2="560" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="980" y="560" width="260" height="130" fill="#e0f2fe" stroke="#0284c7" rx="12" ry="12" stroke-width="2"/>
+  <text x="1110" y="590" font-size="16" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="bold" text-anchor="middle" fill="#111827">Amazon Athena</text>
+  <text x="1110" y="615" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">View reads DynamoDB</text>
+  <text x="1110" y="635" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">SQL, from_unixtime()</text>
+  <line x1="940" y1="625" x2="980" y2="625" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="960" y="619" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Query</text>
+  <rect x="980" y="720" width="260" height="130" fill="#dcfce7" stroke="#16a34a" rx="12" ry="12" stroke-width="2"/>
+  <text x="1110" y="750" font-size="16" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="bold" text-anchor="middle" fill="#111827">Amazon QuickSight</text>
+  <text x="1110" y="775" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Dataset from Athena View</text>
+  <text x="1110" y="795" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">KPIs, Trend charts, Thresholds</text>
+  <line x1="1110" y1="690" x2="1110" y2="720" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1110" y="699" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">SPICE/Direct</text>
+  <rect x="60" y="560" width="260" height="290" fill="#f1f5f9" stroke="#334155" rx="12" ry="12" stroke-width="2"/>
+  <text x="190" y="590" font-size="16" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="bold" text-anchor="middle" fill="#111827">Security Controls</text>
+  <text x="190" y="615" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="start" fill="#111827">• X.509 device certs (TLS)</text>
+  <text x="190" y="635" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="start" fill="#111827">• IoT Policy: pub to farm/sensors</text>
+  <text x="190" y="655" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="start" fill="#111827">• IAM Role (IoT→DynamoDB/SNS)</text>
+  <text x="190" y="675" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="start" fill="#111827">• QS role can Invoke Lambda</text>
+  <text x="190" y="695" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="start" fill="#111827">• S3 access for Athena results</text>
+  <text x="190" y="715" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="start" fill="#111827">• Least privilege recommended</text>
+  <line x1="515" y1="230" x2="515" y2="260" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="515" y="239" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Rule match</text>
+  <line x1="515" y1="230" x2="515" y2="410" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="515" y="314" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Rule match</text>
+  <line x1="940" y1="315" x2="940" y2="560" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="940" y="431" font-size="12" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Federated Query</text>
+  <rect x="980" y="100" width="260" height="150" fill="#ffffff" stroke="#9ca3af" rx="12" ry="12" stroke-width="2"/>
+  <text x="1110" y="130" font-size="16" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="bold" text-anchor="middle" fill="#111827">Legend</text>
+  <text x="1110" y="155" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Blue arrows = data flow</text>
+  <text x="1110" y="175" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Purple = rules/pipeline</text>
+  <text x="1110" y="195" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Orange = storage</text>
+  <text x="1110" y="215" font-size="13" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="normal" text-anchor="middle" fill="#111827">Green = visualization</text>
+</svg>

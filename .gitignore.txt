@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+
+# VS Code / editor junk
+.vscode/
+*.code-workspace
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# AWS certs/keys (NEVER commit)
+*.pem
+*.crt
+*.key
+simulator/certs/*
+.aws/
+
+# QuickSight exports / temp
+*.tmp
+*.log
